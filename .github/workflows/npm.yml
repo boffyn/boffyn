@@ -1,0 +1,29 @@
+name: npm
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    name: Build and publish to npm
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        registry-url: 'https://registry.npmjs.org'
+    - name: Get version from Python package
+      run: |
+        VERSION=$(python3 -c "import re; print(re.search(r'__version__\s*=\s*[\"\'](.*?)[\"\']', open('boffyn/__init__.py').read()).group(1))")
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+    - name: Set npm package version
+      working-directory: npm
+      run: npm version $VERSION --no-git-tag-version
+    - name: Publish to npm
+      working-directory: npm
+      run: npm publish --access public

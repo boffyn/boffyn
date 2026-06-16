@@ -1,0 +1,19 @@
+{
+  "name": "boffyn",
+  "version": "0.0.1",
+  "description": "Install and manage your self-hosted docker compose stack with one manifest",
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "files": [
+    "scripts/"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boffyn/boffyn.git"
+  }
+}
